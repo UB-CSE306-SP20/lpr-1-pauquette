@@ -52,3 +52,5 @@ int caloriesPerServing(struct Recipe * recipe) {
   // Define later
   return 0;
 }
+
+int getQuantity(char * name, struct Pantry * pantry) { return 0; }

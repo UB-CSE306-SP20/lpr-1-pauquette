@@ -59,7 +59,7 @@ void testStoreIngredient(struct Pantry * pantry, struct Ingredient * ingredient,
   CU_ASSERT_STRING_EQUAL(ingredient->name, pantry->head->name);
   CU_ASSERT_EQUAL(quantity, pantry->head->quantity);
   CU_ASSERT_PTR_EQUAL(ingredient, pantry->head);
-  CU_ASSERT_PTR_EQUAL(ingredient->next pantry->head->next);
+  CU_ASSERT_PTR_EQUAL(ingredient->next, pantry->head->next);
 }
 
 void testCaloriesPerServing(struct Recipe * recipe, int expected) {
@@ -69,30 +69,31 @@ void testCaloriesPerServing(struct Recipe * recipe, int expected) {
 
 void testCanMakeAny(struct Pantry * pantry, struct Book * book) {
   struct Book * actual = canMakeAny(pantry, book);
-  currentRecipe = actual->head;
+  struct Recipe * currentRecipe = actual->head;
   while(currentRecipe != NULL) {
-    currentIngredient = currentRecipe->head;
+    struct Ingredient * currentIngredient = currentRecipe->head;
     while(currentIngredient != NULL) {
-      CU_ASSERT(currentIngredient->quantity <= getQuantity(char * name, struct Pantry * pantry)); 
+      bool condition = currentIngredient->quantity <= getQuantity(currentIngredient->name, pantry);
+      CU_ASSERT_TRUE(condition); 
       currentIngredient = currentIngredient->next;
     }
     currentRecipe = currentRecipe->next;
   }
 }
 
-void testCanMakeAll(struct Pantry * patry, struct Book * book) {
+/* void testCanMakeAll(struct Pantry * patry, struct Book * book) {
   struct Book * actual = canMakeAll(pantry, book);
   currentRecipe = actual->head;
   while(currentRecipe != NULL) {
     
   }
-}
+  } */
 
 void testWithinCalorieLimit(struct Pantry * pantry, struct Book * book, int limit) {
   struct Book * actual = withinCalorieLimit(pantry, book, limit);
   struct Recipe * currentRecipe = actual->head;
   while (currentRecipe != NULL) {
-    int calsPerServing = caloriesPerserving(currentRecipe);
+    int calsPerServing = caloriesPerServing(currentRecipe);
     CU_ASSERT(calsPerServing < limit);
     currentRecipe = currentRecipe->next;
   }
@@ -148,7 +149,7 @@ int main() {
       (NULL == CU_add_test(pSuite, "testNewIngredient: Apple", test00)) ||
       (NULL == CU_add_test(pSuite, "testNewRecipe: Apple Pie", test01)) ||
       (NULL == CU_add_test(pSuite, "testNewPantry", test02)) ||
-      (NULL == CU_add_test(pSuite, "testNewBook", test 03)) ||
+      (NULL == CU_add_test(pSuite, "testNewBook", test03)) ||
       (NULL == CU_add_test(pSuite, "testAddIngredient: Apple -> Apple Pie", test04)) ||
       (NULL == CU_add_test(pSuite, "testStoreIngredient: Apple", test05)) ||
       (NULL == CU_add_test(pSuite, "testAddRecipe: Apple Pie", test06)) ||
