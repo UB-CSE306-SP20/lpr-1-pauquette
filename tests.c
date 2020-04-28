@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
 #include "CUnit.h"
 #include "Basic.h"
 #include "RecipeBook.h"
@@ -96,4 +98,69 @@ void testWithinCalorieLimit(struct Pantry * pantry, struct Book * book, int limi
   }
 }
 
- 
+void test00(void) { testNewIngredient("Apple", 1); }
+void test01(void) { testNewPantry(); }
+void test02(void) { testNewRecipe("Apple Pie", 8); }
+void test03(void) { testNewBook(); }
+void test04(void) {
+  struct Recipe * recipe = newRecipe("Apple Pie", 8);
+  struct Ingredient * apple = newIngredient("Apple", 1);
+  testAddIngredient(recipe, apple, 10);
+}
+void test05(void) {
+  struct Pantry * pantry = newPantry();
+  struct Ingredient * apple = newIngredient("Apple", 1);
+  testStoreIngredient(pantry, apple, 10);
+}
+void test06(void) {
+  struct Book * book = newBook();
+  struct Recipe * recipe = newRecipe("Apple Pie", 8);
+  testAddRecipe(book, recipe);
+}
+void test07(void) {
+  struct Recipe * recipe = newRecipe("Apple Pie", 8);
+  struct Ingredient * apples = newIngredient("apples", 1);
+  struct Ingredient * crust = newIngredient("crust", 4);
+  struct Ingredient * sugar = newIngredient("sugar", 4);
+  struct Ingredient * cinnamon = newIngredient("cinnamon", 2);
+  addIngredient(recipe, apples, 500);
+  addIngredient(recipe, crust, 200);
+  addIngredient(recipe, sugar, 100);
+  addIngredient(recipe, cinnamon, 50);
+  testCaloriesPerServing(recipe, 225);
+}
+
+int main() {
+  CU_pSuite pSuite = NULL;
+
+  /* initialize the CUnit test registry */
+  if (CUE_SUCCESS != CU_initialize_registry()) { return CU_get_error(); }
+
+  /* add a suite to the registry */
+  pSuite = CU_add_suite("Suite_1", NULL, NULL);
+  if (NULL == pSuite) {
+    CU_cleanup_registry();
+    return CU_get_error();
+  }
+
+  /* add the tests to the suite */
+  if (
+      (NULL == CU_add_test(pSuite, "testNewIngredient: Apple", test00)) ||
+      (NULL == CU_add_test(pSuite, "testNewRecipe: Apple Pie", test01)) ||
+      (NULL == CU_add_test(pSuite, "testNewPantry", test02)) ||
+      (NULL == CU_add_test(pSuite, "testNewBook", test 03)) ||
+      (NULL == CU_add_test(pSuite, "testAddIngredient: Apple -> Apple Pie", test04)) ||
+      (NULL == CU_add_test(pSuite, "testStoreIngredient: Apple", test05)) ||
+      (NULL == CU_add_test(pSuite, "testAddRecipe: Apple Pie", test06)) ||
+      (NULL == CU_add_test(pSuite, "testCaloriesPerServing: Apple Pie", test07)) 
+      )
+    {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+  
+  CU_basic_set_mode(CU_BRM_VERBOSE);
+  CU_basic_run_tests();
+  CU_cleanup_registry();
+  return CU_get_error();
+}
