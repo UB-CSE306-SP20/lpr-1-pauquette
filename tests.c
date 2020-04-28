@@ -64,3 +64,36 @@ void testCaloriesPerServing(struct Recipe * recipe, int expected) {
   int actual = caloriesPerServing(recipe);
   CU_ASSERT_EQUAL(expected, actual);
 }
+
+void testCanMakeAny(struct Pantry * pantry, struct Book * book) {
+  struct Book * actual = canMakeAny(pantry, book);
+  currentRecipe = actual->head;
+  while(currentRecipe != NULL) {
+    currentIngredient = currentRecipe->head;
+    while(currentIngredient != NULL) {
+      CU_ASSERT(currentIngredient->quantity <= getQuantity(char * name, struct Pantry * pantry)); 
+      currentIngredient = currentIngredient->next;
+    }
+    currentRecipe = currentRecipe->next;
+  }
+}
+
+void testCanMakeAll(struct Pantry * patry, struct Book * book) {
+  struct Book * actual = canMakeAll(pantry, book);
+  currentRecipe = actual->head;
+  while(currentRecipe != NULL) {
+    
+  }
+}
+
+void testWithinCalorieLimit(struct Pantry * pantry, struct Book * book, int limit) {
+  struct Book * actual = withinCalorieLimit(pantry, book, limit);
+  struct Recipe * currentRecipe = actual->head;
+  while (currentRecipe != NULL) {
+    int calsPerServing = caloriesPerserving(currentRecipe);
+    CU_ASSERT(calsPerServing < limit);
+    currentRecipe = currentRecipe->next;
+  }
+}
+
+ 
