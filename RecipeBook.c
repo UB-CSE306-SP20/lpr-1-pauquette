@@ -85,9 +85,11 @@ struct Book * canMakeAll(struct Pantry * pantry, struct Book * book) {
       if (pantryIngredient != NULL && pantryIngredient->quantity >= currentIngredient->quantity) {
 	pantryIngredient->quantity -= currentIngredient->quantity;
       } else { canAdd = false; }
+      currentIngredient = currentIngredient->next;
     }
     if (canAdd) { addRecipe(allBook, currentRecipe); }
     else { canAdd = true; }
+    currentRecipe = currentRecipe->next;
   }
   return allBook;
 }

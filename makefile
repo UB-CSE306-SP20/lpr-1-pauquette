@@ -11,17 +11,14 @@ ifeq ($(OS), Linux)
 endif
 
 CC = gcc
-FLAGS = -g -Wall -std=c11
+FLAGS = -g -O0 -Wall -fprofile-arcs -ftest-coverage -std=c11
 
 RecipeBook.o: RecipeBook.c
 	$(CC) -c $(FLAGS) RecipeBook.c
 
-tests.o: tests.c
-	$(CC) -c $(FLAGS) -I $(CUNIT_PATH_PREFIX)include/$(CUNIT_DIRECTORY) tests.c
-
-tests: RecipeBook.o tests.o
-	gcc -Wall -L $(CUNIT_PATH_PREFIX)lib -I $(CUNIT_PATH_PREFIX)include/$(CUNIT_DIRECTORY) -o tests RecipeBook.o tests.o -lcunit
+tests: RecipeBook.o tests.c
+	$(CC) $(FLAGS) -L $(CUNIT_PATH_PREFIX)lib -I $(CUNIT_PATH_PREFIX)include/$(CUNIT_DIRECTORY) RecipeBook.o tests.c -o tests -lcunit -lgcov
 
 
 clean:
-	rm -rf *~ *.o program tests runner *.dSYM
+	rm -rf *~ *.o a.out tests runner *.xml *.gc?? *.dSYM

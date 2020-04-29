@@ -82,7 +82,7 @@ void testCanMakeAny(struct Pantry * pantry, struct Book * book) {
 }
 
 void testCanMakeAll(struct Pantry * pantry, struct Book * book) {
-  // struct Book * actual = canMakeAll(pantry, book);
+  canMakeAll(pantry, book);
   struct Ingredient * currentIngredient = pantry->head;
   while(currentIngredient != NULL) {
     CU_ASSERT(currentIngredient->quantity >= 0);
@@ -144,10 +144,14 @@ void test08(void) {
   addIngredient(recipe, sugar, 100);
   addIngredient(recipe, cinnamon, 50);
   addRecipe(book, recipe);
-  storeIngredient(pantry, apples, 500);
-  storeIngredient(pantry, crust, 500);
-  storeIngredient(pantry, sugar, 500);
-  storeIngredient(pantry, cinnamon, 500);
+  struct Ingredient * pantryApples = newIngredient("apples", 1);
+  struct Ingredient * pantryCrust = newIngredient("crust", 4);
+  struct Ingredient * pantrySugar = newIngredient("sugar", 4);
+  struct Ingredient * pantryCinnamon = newIngredient("cinnamon", 2);
+  storeIngredient(pantry, pantryApples, 500);
+  storeIngredient(pantry, pantryCrust, 500);
+  storeIngredient(pantry, pantrySugar, 500);
+  storeIngredient(pantry, pantryCinnamon, 500);
   testCanMakeAll(pantry, book);
 }
 
