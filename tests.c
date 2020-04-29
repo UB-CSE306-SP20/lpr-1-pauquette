@@ -73,7 +73,7 @@ void testCanMakeAny(struct Pantry * pantry, struct Book * book) {
   while(currentRecipe != NULL) {
     struct Ingredient * currentIngredient = currentRecipe->head;
     while(currentIngredient != NULL) {
-      bool condition = currentIngredient->quantity <= getQuantity(currentIngredient->name, pantry);
+      bool condition = currentIngredient->quantity <= getIngredient(currentIngredient->name, pantry)->quantity;
       CU_ASSERT_TRUE(condition); 
       currentIngredient = currentIngredient->next;
     }
@@ -81,13 +81,14 @@ void testCanMakeAny(struct Pantry * pantry, struct Book * book) {
   }
 }
 
-/* void testCanMakeAll(struct Pantry * patry, struct Book * book) {
-  struct Book * actual = canMakeAll(pantry, book);
-  currentRecipe = actual->head;
-  while(currentRecipe != NULL) {
-    
+void testCanMakeAll(struct Pantry * pantry, struct Book * book) {
+  // struct Book * actual = canMakeAll(pantry, book);
+  struct Ingredient * currentIngredient = pantry->head;
+  while(currentIngredient != NULL) {
+    CU_ASSERT(currentIngredient->quantity >= 0);
+    currentIngredient = currentIngredient->next;
   }
-  } */
+} 
 
 void testWithinCalorieLimit(struct Pantry * pantry, struct Book * book, int limit) {
   struct Book * actual = withinCalorieLimit(pantry, book, limit);
@@ -130,6 +131,25 @@ void test07(void) {
   addIngredient(recipe, cinnamon, 50);
   testCaloriesPerServing(recipe, 225);
 }
+void test08(void) {
+  struct Book * book = newBook();
+  struct Pantry * pantry = newPantry();
+  struct Recipe * recipe = newRecipe("Apple Pie", 8);
+  struct Ingredient * apples = newIngredient("apples", 1);
+  struct Ingredient * crust = newIngredient("crust", 4);
+  struct Ingredient * sugar = newIngredient("sugar", 4);
+  struct Ingredient * cinnamon = newIngredient("cinnamon", 2);
+  addIngredient(recipe, apples, 500);
+  addIngredient(recipe, crust, 200);
+  addIngredient(recipe, sugar, 100);
+  addIngredient(recipe, cinnamon, 50);
+  addRecipe(book, recipe);
+  storeIngredient(pantry, apples, 500);
+  storeIngredient(pantry, crust, 500);
+  storeIngredient(pantry, sugar, 500);
+  storeIngredient(pantry, cinnamon, 500);
+  testCanMakeAll(pantry, book);
+}
 
 int main() {
   CU_pSuite pSuite = NULL;
@@ -153,7 +173,8 @@ int main() {
       (NULL == CU_add_test(pSuite, "testAddIngredient: Apple -> Apple Pie", test04)) ||
       (NULL == CU_add_test(pSuite, "testStoreIngredient: Apple", test05)) ||
       (NULL == CU_add_test(pSuite, "testAddRecipe: Apple Pie", test06)) ||
-      (NULL == CU_add_test(pSuite, "testCaloriesPerServing: Apple Pie", test07)) 
+      (NULL == CU_add_test(pSuite, "testCaloriesPerServing: Apple Pie", test07)) ||
+      (NULL == CU_add_test(pSuite, "testCanMakeAll: Apple Pie w/ enough ingredients", test08))
       )
     {
       CU_cleanup_registry();

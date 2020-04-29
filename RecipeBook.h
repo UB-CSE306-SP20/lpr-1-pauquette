@@ -76,6 +76,6 @@ struct Book * withinCalorieLimit(struct Pantry * pantry, struct Book * book, int
 /* returns the number of calories per serving of an input recipe */
 int caloriesPerServing(struct Recipe * recipe); 
 
-int getQuantity(char * name, struct Pantry * pantry);
+struct Ingredient * getIngredient(char * name, struct Pantry * pantry);
 
 #endif
