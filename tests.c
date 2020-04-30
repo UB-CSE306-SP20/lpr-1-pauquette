@@ -123,6 +123,16 @@ void testWithinCalorieLimit(struct Pantry * pantry, struct Book * book, int limi
   }
 }
 
+void testWithinCalorieLimitFails(struct Pantry * pantry, struct Book * book, int limit) {
+  struct Book * actual = withinCalorieLimit(pantry, book, limit);
+  struct Recipe * currentRecipe = actual->head;
+  while (currentRecipe != NULL) {
+    int calsPerServing = caloriesPerServing(currentRecipe);
+    CU_ASSERT_FALSE(calsPerServing < limit);
+    currentRecipe = currentRecipe->next;
+  }
+}
+
 void test00(void) { testNewIngredient("Apple", 1); }
 void test01(void) { testNewPantry(); }
 void test02(void) { testNewRecipe("Apple Pie", 8); }
@@ -279,6 +289,31 @@ void test13(void) {
   struct Ingredient * apples = getIngredient("apples", pantry);
   CU_ASSERT_PTR_NULL(apples);
 }
+void test14(void) {
+  struct Book * book = newBook();
+  struct Pantry * pantry = newPantry();
+  struct Recipe * recipe = newRecipe("Apple Pie", 8);
+  struct Ingredient * apples = newIngredient("apples", 1);
+  struct Ingredient * crust = newIngredient("crust", 4);
+  struct Ingredient * sugar = newIngredient("sugar", 4);
+  struct Ingredient * cinnamon = newIngredient("cinnamon", 2);
+  addIngredient(recipe, apples, 500);
+  addIngredient(recipe, crust, 200);
+  addIngredient(recipe, sugar, 100);
+  addIngredient(recipe, cinnamon, 50);
+  addRecipe(book, recipe);
+  struct Ingredient * pantryApples = newIngredient("apples", 1);
+  struct Ingredient * pantryCrust = newIngredient("crust", 4);
+  struct Ingredient * pantrySugar = newIngredient("sugar", 4);
+  struct Ingredient * pantryCinnamon = newIngredient("cinnamon", 2);
+  storeIngredient(pantry, pantryApples, 500);
+  storeIngredient(pantry, pantryCrust, 500);
+  storeIngredient(pantry, pantrySugar, 500);
+  storeIngredient(pantry, pantryCinnamon, 500);
+  struct Book * dietBook;
+  dietBook = canMakeAny(pantry, book);
+  testWithinCalorieLimitFails(pantry, dietBook, 200);
+}
 
 int main() {
   CU_pSuite pSuite = NULL;
@@ -308,7 +343,8 @@ int main() {
       (NULL == CU_add_test(pSuite, "testCanMakeAll: Apple Pie w/o enough ingredients", test10)) ||
       (NULL == CU_add_test(pSuite, "testCanMakeAny: Apple Pie w/o enough ingredients", test11)) ||
       (NULL == CU_add_test(pSuite, "testWithinCalorieLimit: Apple Pie w/in calorie limit", test12)) ||
-      (NULL == CU_add_test(pSuite, "testGetIngredient: No ingredient exists in pantry", test13))
+      (NULL == CU_add_test(pSuite, "testGetIngredient: No ingredient exists in pantry", test13)) ||
+      (NULL == CU_add_test(pSuite, "testWithinCalorieLimitFails: Apple Pie not w/in calorie limit", test14 ))
       )
     {
       CU_cleanup_registry();

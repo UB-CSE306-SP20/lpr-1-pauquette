@@ -1,0 +1,71 @@
+File 'RecipeBook.c'
+Lines executed:100.00% of 91
+Creating 'RecipeBook.c.gcov'
+
+Function 'getIngredient'
+Lines executed:100.00% of 7
+No branches
+No calls
+
+Function 'caloriesPerServing'
+Lines executed:100.00% of 7
+No branches
+No calls
+
+Function 'withinCalorieLimit'
+Lines executed:100.00% of 8
+No branches
+No calls
+
+Function 'canMakeAll'
+Lines executed:100.00% of 16
+No branches
+No calls
+
+Function 'canMakeAny'
+Lines executed:100.00% of 15
+No branches
+No calls
+
+Function 'storeIngredient'
+Lines executed:100.00% of 5
+No branches
+No calls
+
+Function 'addIngredient'
+Lines executed:100.00% of 5
+No branches
+No calls
+
+Function 'addRecipe'
+Lines executed:100.00% of 4
+No branches
+No calls
+
+Function 'newBook'
+Lines executed:100.00% of 4
+No branches
+No calls
+
+Function 'newRecipe'
+Lines executed:100.00% of 8
+No branches
+No calls
+
+Function 'newPantry'
+Lines executed:100.00% of 4
+No branches
+No calls
+
+Function 'newIngredient'
+Lines executed:100.00% of 8
+No branches
+No calls
+
+File 'RecipeBook.c'
+Lines executed:100.00% of 91
+Branches executed:100.00% of 30
+Taken at least once:93.33% of 30
+Calls executed:100.00% of 9
+Creating 'RecipeBook.c.gcov'
+
