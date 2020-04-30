@@ -57,17 +57,20 @@ void storeIngredient(struct Pantry * pantry, struct Ingredient * ingredient, int
 }
 
 struct Book * canMakeAny(struct Pantry * pantry, struct Book * book) {
+  bool canAdd = true;
   struct Book * anyBook = newBook();
   struct Recipe * currentRecipe = book->head;
   while(currentRecipe != NULL) {
     struct Ingredient * currentIngredient = currentRecipe->head;
     while(currentIngredient != NULL) {
       struct Ingredient * pantryIngredient = getIngredient(currentIngredient->name, pantry);
-      if(pantryIngredient != NULL && pantryIngredient->quantity >= currentIngredient->quantity) {
-	addRecipe(anyBook, currentRecipe);
+      if(pantryIngredient == NULL || pantryIngredient->quantity < currentIngredient->quantity) {
+	canAdd = false;
       }
       currentIngredient = currentIngredient->next;
     }
+    if (canAdd) { addRecipe(anyBook, currentRecipe); }
+    else { canAdd = true; }
     currentRecipe = currentRecipe->next;
   }
   return anyBook;

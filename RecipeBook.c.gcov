@@ -1,0 +1,278 @@
+        -:    0:Source:RecipeBook.c
+        -:    0:Graph:RecipeBook.gcno
+        -:    0:Data:RecipeBook.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <stdlib.h>
+        -:    2:#include <string.h>
+        -:    3:#include <stdbool.h>
+        -:    4:#include "RecipeBook.h"
+        -:    5:
+function newIngredient called 47 returned 100% blocks executed 100%
+       47:    6:struct Ingredient * newIngredient(char * name, int caloriesPerGram) {
+       47:    6-block  0
+        -:    7:  struct Ingredient * ingredient;
+       47:    8:  ingredient = malloc(sizeof(*ingredient));
+       47:    9:  ingredient->name = malloc(sizeof(*name)+1);
+       47:   10:  strcpy(ingredient->name, name);
+       47:   11:  ingredient->calories = caloriesPerGram;
+       47:   12:  ingredient->quantity = 0;
+       47:   13:  ingredient->next = NULL;
+       47:   14:  return ingredient;
+       47:   14-block  0
+unconditional  0 taken 47
+        -:   15:}
+        -:   16:
+function newPantry called 8 returned 100% blocks executed 100%
+        8:   17:struct Pantry * newPantry() {
+        8:   17-block  0
+        -:   18:  struct Pantry * pantry;
+        8:   19:  pantry = malloc(sizeof(*pantry));
+        8:   20:  pantry->head = NULL;
+        8:   21:  return pantry;
+        8:   21-block  0
+unconditional  0 taken 8
+        -:   22:}
+        -:   23:
+function newRecipe called 9 returned 100% blocks executed 100%
+        9:   24:struct Recipe * newRecipe(char * name, int servings) {
+        9:   24-block  0
+        -:   25:  struct Recipe * recipe;
+        9:   26:  recipe = malloc(sizeof(*recipe));
+        9:   27:  recipe->name = malloc(sizeof(*name)+1);
+        9:   28:  strcpy(recipe->name, name);
+        9:   29:  recipe->servings = servings;
+        9:   30:  recipe->head = NULL;
+        9:   31:  recipe->next = NULL;
+        9:   32:  return recipe;
+        9:   32-block  0
+unconditional  0 taken 9
+        -:   33:}
+        -:   34:
+function newBook called 13 returned 100% blocks executed 100%
+       13:   35:struct Book * newBook() {
+       13:   35-block  0
+        -:   36:  struct Book * book;
+       13:   37:  book = malloc(sizeof(*book));
+       13:   38:  book->head = NULL;
+       13:   39:  return book;
+       13:   39-block  0
+unconditional  0 taken 13
+        -:   40:}
+        -:   41:
+function addRecipe called 10 returned 100% blocks executed 100%
+       10:   42:void addRecipe(struct Book * book, struct Recipe * recipe) {
+       10:   42-block  0
+       10:   43:  recipe->next = book->head;
+       10:   44:  book->head = recipe;
+       10:   45:}
+        -:   46:
+function addIngredient called 25 returned 100% blocks executed 100%
+       25:   47:void addIngredient(struct Recipe * recipe, struct Ingredient * ingredient, int quantity) {
+       25:   47-block  0
+       25:   48:  ingredient->quantity = quantity;
+       25:   49:  ingredient->next = recipe->head;
+       25:   50:  recipe->head = ingredient;
+       25:   51:}
+        -:   52:
+function storeIngredient called 21 returned 100% blocks executed 100%
+       21:   53:void storeIngredient(struct Pantry * pantry, struct Ingredient * ingredient, int quantity) {
+       21:   53-block  0
+       21:   54:  ingredient->quantity = quantity;
+       21:   55:  ingredient->next = pantry->head;
+       21:   56:  pantry->head = ingredient;
+       21:   57:}
+        -:   58:
+function canMakeAny called 3 returned 100% blocks executed 100%
+        3:   59:struct Book * canMakeAny(struct Pantry * pantry, struct Book * book) {
+        3:   59-block  0
+        3:   60:  bool canAdd = true;
+        3:   61:  struct Book * anyBook = newBook();
+        3:   61-block  0
+call    0 returned 3
+        3:   62:  struct Recipe * currentRecipe = book->head;
+        6:   63:  while(currentRecipe != NULL) {
+unconditional  0 taken 3
+        6:   63-block  0
+branch  1 taken 3
+branch  2 taken 3 (fallthrough)
+        3:   64:    struct Ingredient * currentIngredient = currentRecipe->head;
+       15:   65:    while(currentIngredient != NULL) {
+        3:   65-block  0
+unconditional  0 taken 3
+       15:   65-block  1
+branch  1 taken 12
+branch  2 taken 3 (fallthrough)
+       12:   66:      struct Ingredient * pantryIngredient = getIngredient(currentIngredient->name, pantry);
+       12:   66-block  0
+call    0 returned 12
+       12:   67:      if(pantryIngredient == NULL || pantryIngredient->quantity < currentIngredient->quantity) {
+branch  0 taken 12 (fallthrough)
+branch  1 taken 0
+       12:   67-block  0
+branch  2 taken 1 (fallthrough)
+branch  3 taken 11
+        1:   68:	canAdd = false;
+        1:   68-block  0
+unconditional  0 taken 1
+        -:   69:      }
+       12:   70:      currentIngredient = currentIngredient->next;
+       12:   70-block  0
+unconditional  0 taken 12
+        -:   71:    }
+        3:   72:    if (canAdd) { addRecipe(anyBook, currentRecipe); }
+        3:   72-block  0
+branch  0 taken 2 (fallthrough)
+branch  1 taken 1
+        2:   72-block  1
+call    2 returned 2
+unconditional  3 taken 2
+        1:   73:    else { canAdd = true; }
+        1:   73-block  0
+unconditional  0 taken 1
+        3:   74:    currentRecipe = currentRecipe->next;
+        3:   74-block  0
+unconditional  0 taken 3
+        -:   75:  }
+        3:   76:  return anyBook;
+        3:   76-block  0
+unconditional  0 taken 3
+        -:   77:}
+        -:   78:
+function canMakeAll called 2 returned 100% blocks executed 100%
+        2:   79:struct Book * canMakeAll(struct Pantry * pantry, struct Book * book) {
+        2:   79-block  0
+        -:   80:  // Define later
+        2:   81:  bool canAdd = true;
+        2:   82:  struct Book * allBook = newBook();
+        2:   82-block  0
+call    0 returned 2
+        2:   83:  struct Recipe * currentRecipe = book->head;
+        4:   84:  while (currentRecipe != NULL) {
+unconditional  0 taken 2
+        4:   84-block  0
+branch  1 taken 2
+branch  2 taken 2 (fallthrough)
+        2:   85:    struct Ingredient * currentIngredient = currentRecipe->head;
+       10:   86:    while (currentIngredient != NULL) {
+        2:   86-block  0
+unconditional  0 taken 2
+       10:   86-block  1
+branch  1 taken 8
+branch  2 taken 2 (fallthrough)
+        8:   87:      struct Ingredient * pantryIngredient = getIngredient(currentIngredient->name, pantry);
+        8:   87-block  0
+call    0 returned 8
+        8:   88:      if (pantryIngredient != NULL && pantryIngredient->quantity >= currentIngredient->quantity) {
+branch  0 taken 8 (fallthrough)
+branch  1 taken 0
+        8:   88-block  0
+branch  2 taken 7 (fallthrough)
+branch  3 taken 1
+        7:   89:	pantryIngredient->quantity -= currentIngredient->quantity;
+        7:   89-block  0
+unconditional  0 taken 7
+        1:   90:      } else { canAdd = false; }
+        1:   90-block  0
+unconditional  0 taken 1
+        8:   91:      currentIngredient = currentIngredient->next;
+        8:   91-block  0
+unconditional  0 taken 8
+        -:   92:    }
+        2:   93:    if (canAdd) { addRecipe(allBook, currentRecipe); }
+        2:   93-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+        1:   93-block  1
+call    2 returned 1
+unconditional  3 taken 1
+        1:   94:    else { canAdd = true; }
+        1:   94-block  0
+unconditional  0 taken 1
+        2:   95:    currentRecipe = currentRecipe->next;
+        2:   95-block  0
+unconditional  0 taken 2
+        -:   96:  }
+        2:   97:  return allBook;
+        2:   97-block  0
+unconditional  0 taken 2
+        -:   98:}
+        -:   99:
+function withinCalorieLimit called 1 returned 100% blocks executed 100%
+        1:  100:struct Book * withinCalorieLimit(struct Pantry * pantry, struct Book * book, int limit) {
+        1:  100-block  0
+        1:  101:  struct Book * dietBook = newBook();
+        1:  101-block  0
+call    0 returned 1
+        1:  102:  struct Recipe * currentRecipe = book->head;
+        2:  103:  while (currentRecipe != NULL) {
+unconditional  0 taken 1
+        2:  103-block  0
+branch  1 taken 1
+branch  2 taken 1 (fallthrough)
+        1:  104:    if (caloriesPerServing(currentRecipe) < limit) {
+        1:  104-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  105:      addRecipe(dietBook, currentRecipe);
+        1:  105-block  0
+call    0 returned 1
+unconditional  1 taken 1
+        -:  106:    }
+        1:  107:    currentRecipe = currentRecipe->next;
+        1:  107-block  0
+unconditional  0 taken 1
+        -:  108:  }
+        1:  109:  return dietBook;
+        1:  109-block  0
+unconditional  0 taken 1
+        -:  110:}
+        -:  111:
+function caloriesPerServing called 3 returned 100% blocks executed 100%
+        3:  112:int caloriesPerServing(struct Recipe * recipe) {
+        3:  112-block  0
+        3:  113:  int totalCalories = 0;
+        3:  114:  struct Ingredient * current = recipe->head;
+       15:  115:  while (current != NULL) {
+        3:  115-block  0
+unconditional  0 taken 3
+       15:  115-block  1
+branch  1 taken 12
+branch  2 taken 3 (fallthrough)
+       12:  116:    totalCalories += (current->calories * current->quantity);
+       12:  117:    current = current->next; 
+       12:  117-block  0
+unconditional  0 taken 12
+        -:  118:  }
+        3:  119:  return totalCalories/recipe->servings;
+        3:  119-block  0
+unconditional  0 taken 3
+        -:  120:}
+        -:  121:
+function getIngredient called 25 returned 100% blocks executed 100%
+       25:  122:struct Ingredient * getIngredient(char * name, struct Pantry * pantry) {
+       25:  122-block  0
+       25:  123:  struct Ingredient * current = pantry->head;
+       61:  124:  while (current != NULL) {
+       25:  124-block  0
+unconditional  0 taken 25
+       61:  124-block  1
+branch  1 taken 60
+branch  2 taken 1 (fallthrough)
+       60:  125:    if(!strcmp(current->name, name)) {
+       60:  125-block  0
+branch  0 taken 24 (fallthrough)
+branch  1 taken 36
+       24:  126:      return current;
+       24:  126-block  0
+unconditional  0 taken 24
+        -:  127:    }
+       36:  128:    current = current->next;
+       36:  128-block  0
+unconditional  0 taken 36
+        -:  129:  }
+        1:  130:  return NULL;
+        1:  130-block  0
+unconditional  0 taken 1
+        -:  131:}
