@@ -1,0 +1,119 @@
+==19857== Memcheck, a memory error detector
+==19857== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==19857== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==19857== Command: ./main
+==19857== Parent PID: 16986
+==19857== 
+==19857== Conditional jump or move depends on uninitialised value(s)
+==19857==    at 0x4019C20: index (rtld-strchr.S:106)
+==19857==    by 0x4007590: _dl_dst_count (dl-load.c:285)
+==19857==    by 0x4007590: expand_dynamic_string_token (dl-load.c:444)
+==19857==    by 0x400855C: _dl_map_object (dl-load.c:2350)
+==19857==    by 0x400130D: map_doit (rtld.c:581)
+==19857==    by 0x400F783: _dl_catch_error (dl-error.c:177)
+==19857==    by 0x4001DE9: do_preload (rtld.c:765)
+==19857==    by 0x4001DE9: handle_ld_preload (rtld.c:863)
+==19857==    by 0x40042A1: dl_main (rtld.c:1606)
+==19857==    by 0x4017FBD: _dl_sysdep_start (dl-sysdep.c:244)
+==19857==    by 0x4001BB0: _dl_start_final (rtld.c:400)
+==19857==    by 0x4001BB0: _dl_start (rtld.c:512)
+==19857==    by 0x4001127: ??? (in /usr/lib64/ld-2.17.so)
+==19857== 
+==19857== Conditional jump or move depends on uninitialised value(s)
+==19857==    at 0x4019C2F: index (rtld-strchr.S:111)
+==19857==    by 0x4007590: _dl_dst_count (dl-load.c:285)
+==19857==    by 0x4007590: expand_dynamic_string_token (dl-load.c:444)
+==19857==    by 0x400855C: _dl_map_object (dl-load.c:2350)
+==19857==    by 0x400130D: map_doit (rtld.c:581)
+==19857==    by 0x400F783: _dl_catch_error (dl-error.c:177)
+==19857==    by 0x4001DE9: do_preload (rtld.c:765)
+==19857==    by 0x4001DE9: handle_ld_preload (rtld.c:863)
+==19857==    by 0x40042A1: dl_main (rtld.c:1606)
+==19857==    by 0x4017FBD: _dl_sysdep_start (dl-sysdep.c:244)
+==19857==    by 0x4001BB0: _dl_start_final (rtld.c:400)
+==19857==    by 0x4001BB0: _dl_start (rtld.c:512)
+==19857==    by 0x4001127: ??? (in /usr/lib64/ld-2.17.so)
+==19857== 
+==19857== Conditional jump or move depends on uninitialised value(s)
+==19857==    at 0x4019C3E: index (rtld-strchr.S:121)
+==19857==    by 0x4007590: _dl_dst_count (dl-load.c:285)
+==19857==    by 0x4007590: expand_dynamic_string_token (dl-load.c:444)
+==19857==    by 0x400855C: _dl_map_object (dl-load.c:2350)
+==19857==    by 0x400130D: map_doit (rtld.c:581)
+==19857==    by 0x400F783: _dl_catch_error (dl-error.c:177)
+==19857==    by 0x4001DE9: do_preload (rtld.c:765)
+==19857==    by 0x4001DE9: handle_ld_preload (rtld.c:863)
+==19857==    by 0x40042A1: dl_main (rtld.c:1606)
+==19857==    by 0x4017FBD: _dl_sysdep_start (dl-sysdep.c:244)
+==19857==    by 0x4001BB0: _dl_start_final (rtld.c:400)
+==19857==    by 0x4001BB0: _dl_start (rtld.c:512)
+==19857==    by 0x4001127: ??? (in /usr/lib64/ld-2.17.so)
+==19857== 
+==19857== 
+==19857== HEAP SUMMARY:
+==19857==     in use at exit: 222 bytes in 16 blocks
+==19857==   total heap usage: 16 allocs, 0 frees, 222 bytes allocated
+==19857== 
+==19857== 2 bytes in 1 blocks are definitely lost in loss record 1 of 16
+==19857==    at 0x4C2A28A: malloc (vg_replace_malloc.c:299)
+==19857==    by 0x40093D: i2a (Ingredient.c:27)
+==19857==    by 0x4009AF: toString (Ingredient.c:38)
+==19857==    by 0x400B82: main (in /home/csdue/hollispa/CSE306/lpr-1-pauquette/lpr2/main)
+==19857== 
+==19857== 2 bytes in 1 blocks are definitely lost in loss record 2 of 16
+==19857==    at 0x4C2A28A: malloc (vg_replace_malloc.c:299)
+==19857==    by 0x40093D: i2a (Ingredient.c:27)
+==19857==    by 0x4009AF: toString (Ingredient.c:38)
+==19857==    by 0x400BD3: main (in /home/csdue/hollispa/CSE306/lpr-1-pauquette/lpr2/main)
+==19857== 
+==19857== 4 bytes in 1 blocks are definitely lost in loss record 3 of 16
+==19857==    at 0x4C2A28A: malloc (vg_replace_malloc.c:299)
+==19857==    by 0x40093D: i2a (Ingredient.c:27)
+==19857==    by 0x4009AF: toString (Ingredient.c:38)
+==19857==    by 0x400B28: main (in /home/csdue/hollispa/CSE306/lpr-1-pauquette/lpr2/main)
+==19857== 
+==19857== 7 bytes in 1 blocks are definitely lost in loss record 4 of 16
+==19857==    at 0x4C2A28A: malloc (vg_replace_malloc.c:299)
+==19857==    by 0x4009EA: toString (Ingredient.c:42)
+==19857==    by 0x400B82: main (in /home/csdue/hollispa/CSE306/lpr-1-pauquette/lpr2/main)
+==19857== 
+==19857== 8 bytes in 1 blocks are definitely lost in loss record 5 of 16
+==19857==    at 0x4C2A28A: malloc (vg_replace_malloc.c:299)
+==19857==    by 0x400A8A: newBook (Book.c:7)
+==19857==    by 0x400AC7: main (in /home/csdue/hollispa/CSE306/lpr-1-pauquette/lpr2/main)
+==19857== 
+==19857== 8 bytes in 1 blocks are definitely lost in loss record 6 of 16
+==19857==    at 0x4C2A28A: malloc (vg_replace_malloc.c:299)
+==19857==    by 0x4009EA: toString (Ingredient.c:42)
+==19857==    by 0x400B28: main (in /home/csdue/hollispa/CSE306/lpr-1-pauquette/lpr2/main)
+==19857== 
+==19857== 8 bytes in 1 blocks are definitely lost in loss record 7 of 16
+==19857==    at 0x4C2A28A: malloc (vg_replace_malloc.c:299)
+==19857==    by 0x400A8A: newBook (Book.c:7)
+==19857==    by 0x400B4C: main (in /home/csdue/hollispa/CSE306/lpr-1-pauquette/lpr2/main)
+==19857== 
+==19857== 15 bytes in 1 blocks are definitely lost in loss record 8 of 16
+==19857==    at 0x4C2A28A: malloc (vg_replace_malloc.c:299)
+==19857==    by 0x4009EA: toString (Ingredient.c:42)
+==19857==    by 0x400BD3: main (in /home/csdue/hollispa/CSE306/lpr-1-pauquette/lpr2/main)
+==19857== 
+==19857== 64 (24 direct, 40 indirect) bytes in 1 blocks are definitely lost in loss record 15 of 16
+==19857==    at 0x4C2A28A: malloc (vg_replace_malloc.c:299)
+==19857==    by 0x40074E: newRecipe (Recipe.c:9)
+==19857==    by 0x400ADA: main (in /home/csdue/hollispa/CSE306/lpr-1-pauquette/lpr2/main)
+==19857== 
+==19857== 104 (24 direct, 80 indirect) bytes in 1 blocks are definitely lost in loss record 16 of 16
+==19857==    at 0x4C2A28A: malloc (vg_replace_malloc.c:299)
+==19857==    by 0x40074E: newRecipe (Recipe.c:9)
+==19857==    by 0x400B5F: main (in /home/csdue/hollispa/CSE306/lpr-1-pauquette/lpr2/main)
+==19857== 
+==19857== LEAK SUMMARY:
+==19857==    definitely lost: 102 bytes in 10 blocks
+==19857==    indirectly lost: 120 bytes in 6 blocks
+==19857==      possibly lost: 0 bytes in 0 blocks
+==19857==    still reachable: 0 bytes in 0 blocks
+==19857==         suppressed: 0 bytes in 0 blocks
+==19857== 
+==19857== For counts of detected and suppressed errors, rerun with: -v
+==19857== Use --track-origins=yes to see where uninitialised values come from
+==19857== ERROR SUMMARY: 16 errors from 13 contexts (suppressed: 0 from 0)

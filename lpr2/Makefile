@@ -33,6 +33,9 @@ main: $(OBJECTS)
 
 # PHONY targets
 
+andRunMemcheck: main
+	valgrind --tool=memcheck --leak-check=yes ./main
+
 .PHONY: clean
 clean:
 	rm -rf *~ $(OBJECTS) $(EXE) *.zip

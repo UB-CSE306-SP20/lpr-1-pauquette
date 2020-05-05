@@ -43,5 +43,6 @@ char * toString(struct Ingredient * a) {
   for (int i=0; i<len1; i++) { string[i] = a->name[i]; }
   for (int i=0; i<len2; i++) { string[len1+i] = s2[i]; }
   string[len1+len2]='\0';
+  free(s2);
   return string;
 }
