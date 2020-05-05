@@ -18,13 +18,15 @@ int main(int argc, char * argv[]) {
   str1 = toString(i);
   printf("Ingredient: %s\n",str1);
   free(str1);
+  free(b);
+  free(r);
+  free(i);
 
   b = newBook();
   r = newRecipe("Tea, Earl Grey, hot", 1);
   i = newIngredient("Water", 0);
   str2 = toString(i);
   printf("Ingredient: %s\n",str2);
-  free(str2);
   addIngredient(r, i, 240);
   i = newIngredient("Earl Grey tea", 1);
   str2 = toString(i);
