@@ -35,14 +35,17 @@ char * toString(struct Ingredient * a) {
   if (a == NULL || a->name == NULL) {
     return "NULL";
   }
+  char * quantity = " | Calories Per Gram: "; 
   char * s2 = i2a(a->caloriesPerGram);
   int len1 = strlen(a->name);
   int len2 = strlen(s2);
+  int len3 = strlen(quantity);
   char * string;
-  string = malloc(sizeof(char)*(len1 + len2) + 1);
+  string = malloc(sizeof(char)*(len1 + len2 + len3) + 1);
   for (int i=0; i<len1; i++) { string[i] = a->name[i]; }
-  for (int i=0; i<len2; i++) { string[len1+i] = s2[i]; }
-  string[len1+len2]='\0';
+  for (int i=0; i<len3; i++) { string[len1+i] = quantity[i]; } 
+  for (int i=0; i<len2; i++) { string[len1+len3+i] = s2[i]; }
+  string[len1+len2+len3]='\0';
   free(s2);
   return string;
 }
