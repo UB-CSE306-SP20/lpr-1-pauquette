@@ -18,6 +18,10 @@ int main(int argc, char * argv[]) {
   str1 = toString(i);
   printf("Ingredient: %s\n",str1);
   free(str1);
+  free(i);
+  free(r->head);
+  free(r);
+  free(b);
 
   b = newBook();
   r = newRecipe("Tea, Earl Grey, hot", 1);
