@@ -3,7 +3,8 @@
 #include "Ingredient.h"
 #include "Recipe.h"
 #include "Book.h"
-
+#include "NodeIngredientQuantity.h"
+ 
 int main(int argc, char * argv[]) {
   char * str1;
   char * str2;
@@ -36,6 +37,15 @@ int main(int argc, char * argv[]) {
   addIngredient(r, i, 2);
   addRecipe(b, r);
   free(str2);
+  while(r->head != NULL) {
+    free(r->head->ingredient);
+    struct NodeIngredientQuantity * temp;
+    temp = r->head->next;
+    free(r->head);
+    r->head = temp;
+  }
+  free(r);
+  free(b);
   return 0;
 }
 

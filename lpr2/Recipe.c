@@ -15,10 +15,7 @@ struct Recipe * newRecipe(char * n, int s) {
 
 void addIngredient(struct Recipe * recipe, struct Ingredient * ingredient, int quantityInGrams) {
   struct NodeIngredientQuantity * this;
-  this = malloc(sizeof(*this));
-  this -> ingredient = ingredient;
-  this -> grams = quantityInGrams;
-  this -> next = recipe -> head;
+  this = newNodeIngredientQuantity(ingredient, quantityInGrams, recipe->head);
   recipe -> head = this;
 }
 
