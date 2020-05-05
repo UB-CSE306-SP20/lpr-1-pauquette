@@ -18,6 +18,7 @@ struct Ingredient * mergeIngredients(struct Ingredient * a, struct Ingredient * 
 }
 
 int digitLength(int n) {
+  if (n == 0) { return 1; }
   return 1+ (int) (log10(n));
 }
 
