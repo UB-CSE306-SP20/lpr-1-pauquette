@@ -72,7 +72,8 @@ void addRecipe(struct Book * book, struct Recipe * recipe) {
    ingredient's next pointer to head of recipe and sets ingredient to be the new head of recipe.
    @params - recipe: A pointer to a Recipe struct that is having the Ingredient added to it
            - ingredient: A pointer to the Ingredient struct that is being added to recipe
-           - quantity: The amount of Ingredient to be added to the recipe in grams */ 
+           - quantity: The amount of Ingredient to be added to the recipe in grams 
+   @returns - none */
 
 void addIngredient(struct Recipe * recipe, struct Ingredient * ingredient, int quantity) {
   ingredient->quantity = quantity;
@@ -80,11 +81,25 @@ void addIngredient(struct Recipe * recipe, struct Ingredient * ingredient, int q
   recipe->head = ingredient;
 }
 
+/* Function to add an Ingredient struct to a Pantry struct. Function sets Ingredient quantity, sets
+   ingredient's next pointer to head of pantry and sets ingredient to be the new head of pantry.
+   @params - pantry: A pointer to a Pantry struct that is having the Ingredient added to it
+           - ingredient: A pointer to the Ingredient struct that is being added to pantry
+           - quantity: The amount of Ingredient to be added to the pantry in grams 
+   @returns - none */
+
 void storeIngredient(struct Pantry * pantry, struct Ingredient * ingredient, int quantity) {
   ingredient->quantity = quantity;
   ingredient->next = pantry->head;
   pantry->head = ingredient;
 }
+
+/* Function that returns a pointer to a new Book struct comprised of recipes from the input book that can be made with 
+   the ingredients currently in pantry. Any of the recipes can be made at least once, but not all recipes may be able
+   to be made after another recipe is made.
+   @params - pantry: A pointer to a Pantry struct that contains ingredients
+           - book: A pointer to an input Book struct that the new book is to be made from
+   @returns - anyBook: a Pointer to a new Book struct that holds recipes that can be made from ingredients in pantry */
 
 struct Book * canMakeAny(struct Pantry * pantry, struct Book * book) {
   bool canAdd = true;
@@ -106,6 +121,12 @@ struct Book * canMakeAny(struct Pantry * pantry, struct Book * book) {
   return anyBook;
 }
 
+/* Function that returns a pointer to a new Book struct comprised of recipes from the input book that can be made with 
+   the ingredients currently in pantry. All of the recipes can be made at least once.
+   @params - pantry: A pointer to a Pantry struct that contains ingredients
+           - book: A pointer to an input Book struct that the new book is to be made from
+   @returns - allBook: a Pointer to a new Book struct that holds recipes that can be made from ingredients in pantry */
+
 struct Book * canMakeAll(struct Pantry * pantry, struct Book * book) {
   bool canAdd = true;
   struct Book * allBook = newBook();
@@ -126,6 +147,13 @@ struct Book * canMakeAll(struct Pantry * pantry, struct Book * book) {
   return allBook;
 }
 
+/* Function that returns a pointer to a new Book struct comprised of recipes from the input book that are within the
+   calorie limit.
+   @params - pantry: A pointer to a Pantry struct that contains ingredients
+           - book: A pointer to an input Book struct that the new book is to be made from
+	   - limit: The maximum amount of calories per serving allowed per recipe
+   @returns - dietBook: a Pointer to a new Book struct that holds recipes that are within the calorie limit */
+
 struct Book * withinCalorieLimit(struct Pantry * pantry, struct Book * book, int limit) {
   struct Book * dietBook = newBook();
   struct Recipe * currentRecipe = book->head;
@@ -138,6 +166,11 @@ struct Book * withinCalorieLimit(struct Pantry * pantry, struct Book * book, int
   return dietBook;
 }
 
+/* Function that computes the number of calories per serving of an input recipe. Function totals calories of all 
+   Ingredients in recipe and divides it by the number of servings. Value is rounded to the next whole number.
+   @params - recipe: A pointer to a Recipe struct to perform calculation on 
+   @returns - the number of calories per serving */
+
 int caloriesPerServing(struct Recipe * recipe) {
   int totalCalories = 0;
   struct Ingredient * current = recipe->head;
@@ -147,6 +180,11 @@ int caloriesPerServing(struct Recipe * recipe) {
   }
   return totalCalories/recipe->servings;
 }
+
+/* Function that returns the Ingredient specified by name if it exists in pantry
+   @params - name: A string containing the name of the desired ingredient
+           - pantry: A pointer to a Pantry struct that is to be searched for the ingredient
+   @returns - A pointer to an Ingredient struct if it exists in pantry, NULL otherwise */
 
 struct Ingredient * getIngredient(char * name, struct Pantry * pantry) {
   struct Ingredient * current = pantry->head;
